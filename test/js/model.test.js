@@ -3,6 +3,10 @@ import { Model } from '../../src/js'
 
 // Classes:
 class Test extends Model {}
+class TestModelName extends Model {}
+
+// Prototyping:
+TestModelName.prototype.modelName = 'TestModelName'
 
 // Tests:
 test('Create new instance', () => {
@@ -14,7 +18,29 @@ test('Get instance id', () => {
 })
 
 test('Get instance from localStorage', () => {
-  new Test({ id: '3' })
+  let test = new Test({ id: '3' })
+
+  test.save()
 
   expect(Test.get('3').id).toBe('3')
+})
+
+test('Get model name from class', () => {
+  expect(new Test({ id: '4' }).constructor.name).toBe('Test')
+})
+
+test('Get model name from modelName property', () => {
+  expect(new TestModelName({ id: '5' }).modelName).toBe('TestModelName')
+})
+
+test('Notify on property update', () => {
+  let test = new Test({ id: '6' })
+
+  test.onUpdate((property, before, after) => {
+    expect(property).toBe('id')
+    expect(before).toBe('6')
+    expect(after).toBe('7')
+  })
+
+  test.id = '7'
 })

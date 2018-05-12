@@ -7,10 +7,21 @@
   "devDependencies": {
     "babel-core": "^6.26.3",
     "jest": "*",
+    "jest-localstorage-mock": "*",
     "parcel-bundler": "^1.8.1"
   },
   "homepage": "https://github.com/tdmnco/model-js#readme",
-  "keywords": ["javascript", "json", "model", "tdmnco"],
+  "jest": {
+    "setupFiles": [
+      "jest-localstorage-mock"
+    ]
+  },
+  "keywords": [
+    "javascript",
+    "json",
+    "model",
+    "tdmnco"
+  ],
   "license": "MIT",
   "main": "dist/index.js",
   "name": "tdmnco-model-js",
@@ -22,5 +33,5 @@
     "type": "git",
     "url": "git+https://github.com/tdmnco/model-js.git"
   },
-  "version": "0.0.1"
+  "version": "0.0.2"
 }

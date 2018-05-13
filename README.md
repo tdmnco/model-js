@@ -23,20 +23,10 @@ $ npm install tdmnco-model-js
 
 Using Model.js is simple and easy. Consider the following example:
 
-### post-model.js
-
 ```
 import { Model } from 'tdmnco-model-js'
 
 class Post extends Model {}
-
-export { Post }
-```
-
-### index.js
-
-```
-import { Post } from './post-model'
 
 let post = new Post({
   content: 'I love cherries!',
@@ -44,8 +34,33 @@ let post = new Post({
   title: 'A tribute to cherries'
 })
 
+post.author = 'Kasper Tidemann'
+
 post.save()
 ```
+
+### Update hooks
+
+Model.js supports hooks for when the value of a property is updated:
+
+```
+import { Model } from 'tdmnco-model-js'
+
+class Fruit extends Model {}
+
+let apple = new Fruit({
+  color: 'green',
+  id: '2'
+})
+
+apple.onUpdate((property, before, after) => {
+  console.log('The apple ' + property + ' was ' + before + ', but now it is ' + after + '!')
+})
+
+apple.color = 'red'
+```
+
+The above example will print `The apple color was green, but now it is red!` in the console.
 
 ### Prevent uglifying model names
 
@@ -73,7 +88,7 @@ Model.js makes use of [Parcel]() for building the distributable `index.js`. In o
 $ npm run dist
 ```
 
-![Example of building Model.js](https://raw.githubusercontent.com/tdmnco/model-js/master/src/gfx/npm-run-test.gif)
+![Example of building Model.js](https://raw.githubusercontent.com/tdmnco/model-js/master/src/gfx/npm-run-dist.gif)
 
 ### Test
 
@@ -89,7 +104,7 @@ $ npm run test
 
 We believe in an open and welcoming community for all. Please post your questions in the [Issues](https://github.com/tdmnco/model-js/issues) section here at GitHub or contact Kasper Tidemann directly at [kt@tdmn.co](kt@tdmn.co).
 
-Note that if your questions has general relevance, it might be worth sharing with others.
+Note that if your question has general relevance, it might be worth sharing with others.
 
 ## Change log
 

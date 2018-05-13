@@ -44,3 +44,13 @@ test('Notify on property update', () => {
 
   test.id = '7'
 })
+
+test('Get instance from cache', () => {
+  let test = new Test({ id: '8' })
+
+  test.save()
+
+  let cachedTest = Test.get('8')
+
+  expect(test._created).toBe(cachedTest._created)
+})

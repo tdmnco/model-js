@@ -1,4 +1,5 @@
 // Variables:
+let cache = []
 let persist = true
 
 try {
@@ -13,6 +14,7 @@ try {
 // Classes:
 class Model {
   constructor(data) {
+    this._created = new Date().toISOString()
     this._data = data
     this._updateHooks = []
 
@@ -36,9 +38,15 @@ class Model {
   }
 
   static get(id) {
-    if (persist) {
-      return new this(JSON.parse(localStorage.getItem((this.prototype.modelName || this.prototype.constructor.name) + '-' + id)))
+    id = (this.prototype.modelName || this.prototype.constructor.name) + '-' + id
+
+    let instance = cache[id]
+
+    if (!instance && persist) {
+      instance = new this(JSON.parse(localStorage.getItem(id)))
     }
+
+    return instance
   }
 
   onUpdate(hook) {
@@ -46,8 +54,12 @@ class Model {
   }
 
   save() {
+    let id = (this.modelName || this.constructor.name) + '-' + this.id
+
+    cache[id] = this
+
     if (persist) {
-      localStorage.setItem((this.modelName || this.constructor.name) + '-' + this.id, JSON.stringify(this._data))
+      localStorage.setItem(id, JSON.stringify(this._data))
     }
   }
 }

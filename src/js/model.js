@@ -1,6 +1,7 @@
 // Variables:
 let cache = []
 let persist = true
+let notify = {}
 
 try {
   localStorage.setItem('tdmnco-model-js', {})
@@ -14,52 +15,87 @@ try {
 // Classes:
 class Model {
   constructor(data) {
-    this._created = new Date().toISOString()
-    this._data = data
-    this._updateHooks = []
-
-    for (let key of Object.keys(this._data)) {
-      Object.defineProperty(this, key, {
-        get: () => {
-          return this._data[key]
-        },
-
-        set: (value) => {
-          for (let hook of this._updateHooks) {
-            hook(key, this._data[key], value)
-          }
-
-          this._data[key] = value
-
-          return value
-        }
-      })
+    if (!data.id) {
+      throw new Error('Model.js: cannot create instance without an id!')
     }
+
+    Object.assign(this, data)
+
+    let id = (this.constructor.prototype.modelName || this.constructor.name) + '-' + this.id
+
+    notify[id] = {
+      updates: []
+    }
+
+    return new Proxy(this, {
+      get(target, property, receiver) {
+				return Reflect.get(target, property, receiver);
+  		},
+
+      set(target, property, value) {
+        let updates = notify[id].updates
+
+        if (updates.length) {
+          for (let update of updates) {
+            update(property, target[property], value)
+          }
+        }
+
+        Reflect.set(target, property, value)
+
+        return true
+      }
+    })
   }
 
+  // Static functions:
   static get(id) {
     id = (this.prototype.modelName || this.prototype.constructor.name) + '-' + id
 
-    let instance = cache[id]
+    let cached = cache[id]
 
-    if (!instance && persist) {
-      instance = new this(JSON.parse(localStorage.getItem(id)))
+    if (!cached && persist) {
+      return new this(JSON.parse(localStorage.getItem(id)))
     }
 
-    return instance
+    return cached.instance
   }
 
-  onUpdate(hook) {
-    this._updateHooks.push(hook)
+  // Private functions:
+  _cache() {
+    let cached = this._cached()
+    let now = new Date().toISOString()
+
+    if (!cached) {
+      cached = { created: now, random: Math.random(), instance: this }
+
+      cache[this._id()] = cached
+    } else {
+      cached.instance = this
+      cached.updated = now
+    }
+
+    return cached
+  }
+
+  _cached() {
+    return cache[this._id()]
+  }
+
+  _id() {
+    return (this.modelName || this.constructor.name) + '-' + this.id
+  }
+
+  // Public functions:
+  onUpdate(callback) {
+    notify[this._id()].updates.push(callback)
   }
 
   save() {
-    let id = (this.modelName || this.constructor.name) + '-' + this.id
-
-    cache[id] = this
+    this._cache()
 
     if (persist) {
-      localStorage.setItem(id, JSON.stringify(this._data))
+      localStorage.setItem(this._id(), JSON.stringify(this))
     }
   }
 }

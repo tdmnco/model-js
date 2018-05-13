@@ -13,8 +13,14 @@ test('Create new instance', () => {
   expect(new Test({ id: '1' })).toBeDefined()
 })
 
+test('Cannot create new instance without id', () => {
+  expect(() => {
+    new Test({ firstName: 'Kasper' })
+  }).toThrow()
+})
+
 test('Get instance id', () => {
-  expect(new Test({ id: '2' }).id).toBeDefined()
+  expect(new Test({ id: '2' }).id).toBe('2')
 })
 
 test('Get instance from localStorage', () => {
@@ -33,8 +39,8 @@ test('Get model name from modelName property', () => {
   expect(new TestModelName({ id: '5' }).modelName).toBe('TestModelName')
 })
 
-test('Notify on property update', () => {
-  let test = new Test({ id: '6' })
+test('Notify on constructor property update', () => {
+  let test = new TestModelName({ id: '6' })
 
   test.onUpdate((property, before, after) => {
     expect(property).toBe('id')
@@ -45,12 +51,37 @@ test('Notify on property update', () => {
   test.id = '7'
 })
 
+test('Notify on runtime property update', () => {
+  let test = new Test({ id: '7' })
+
+  test.firstName = ''
+
+  test.onUpdate((property, before, after) => {
+    expect(property).toBe('firstName')
+    expect(before).toBe('')
+    expect(after).toBe('Kasper')
+  })
+
+  test.firstName = 'Kasper'
+})
+
 test('Get instance from cache', () => {
   let test = new Test({ id: '8' })
 
   test.save()
 
-  let cachedTest = Test.get('8')
+  let cachedTest1 = Test.get('8')
 
-  expect(test._created).toBe(cachedTest._created)
+  test.description = 'Test description 1'
+
+  test.save()
+
+  test.description = 'Test description 2'
+
+  test.save()
+
+  let cachedTest2 = Test.get('8')
+
+  expect(test.description).toBe(cachedTest1.description)
+  expect(test.description).toBe(cachedTest2.description)
 })

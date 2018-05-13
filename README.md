@@ -9,7 +9,7 @@
 
 Model.js is a simple model layer for web applications. It supports a dynamic model definition scheme based on JSON properties.
 
-It is used internally here at Tidemann&Co for all our web applications that require a model layer in JavaScript.
+It is used internally at Tidemann&Co for all our web applications that require a model layer in JavaScript.
 
 ## Installation
 
@@ -29,6 +29,7 @@ import { Model } from 'tdmnco-model-js'
 class Post extends Model {}
 
 let post = new Post({
+  author: '',
   content: 'I love cherries!',
   id: '1',
   title: 'A tribute to cherries'
@@ -39,9 +40,9 @@ post.author = 'Kasper Tidemann'
 post.save()
 ```
 
-### Update hooks
+### Callback on value updates
 
-Model.js supports hooks for when the value of a property is updated:
+Model.js supports callbacks for when the value of a property is updated:
 
 ```javascript
 import { Model } from 'tdmnco-model-js'
@@ -107,6 +108,17 @@ We believe in an open and welcoming community for all. Please post your question
 Note that if your question has general relevance, it might be worth sharing with others.
 
 ## Change log
+
+### v0.0.6
+
+#### News
+
+* Replaces the use of `Object.defineProperty` in the model constructor in favor of `Proxy` for spying on properties added after an instance has been created.
+* Optimizes the handling of callbacks on updates, so that the previous `_hooks` array is not persisted into `localStorage`.
+
+#### Testing
+
+* Improved test coverage.
 
 ### v0.0.5
 

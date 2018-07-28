@@ -28,7 +28,6 @@
   "name": "tdmnco-model-js",
   "scripts": {
     "dist": "rm -rf dist && parcel build src/js/index.js",
-    "publish": "npm run dist && npm publish",
     "test": "jest test/js"
   },
   "repository": {

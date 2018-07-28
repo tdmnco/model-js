@@ -49,6 +49,10 @@ class Model {
   }
 
   // Static functions:
+  static first(query) {
+    return this.get(query)[0]
+  }
+
   static get(query) {
     if (!query) {
       let instances = []

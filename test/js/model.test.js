@@ -115,3 +115,19 @@ test('Get instances via array of ids', () => {
 test('Get all instances', () => {
   expect(Test.get().length).toBe(9)
 })
+
+test('Get first instance via property query', () => {
+  let test = new Test({ bandName: 'Metallica', id: '17' })
+
+  test.save()
+
+  expect(Test.first({ bandName: 'Metallica' }).id).toBe('17')
+})
+
+test('Get first instance via array of ids', () => {
+  new Test({ id: '18' }).save()
+  new Test({ id: '19' }).save()
+  new Test({ id: '20' }).save()
+
+  expect(Test.first(['19']).id).toBe('19')
+})

@@ -6,15 +6,16 @@
   "description": "Model.js is a simple model layer for web applications.",
   "devDependencies": {
     "babel-core": "^6.26.3",
-    "jest": "*",
+    "jest": "^23.4.2",
     "jest-localstorage-mock": "*",
-    "parcel-bundler": "^1.8.1"
+    "parcel-bundler": "^1.9.7"
   },
   "homepage": "https://github.com/tdmnco/model-js#readme",
   "jest": {
     "setupFiles": [
       "jest-localstorage-mock"
-    ]
+    ],
+    "testURL": "http://localhost/"
   },
   "keywords": [
     "javascript",

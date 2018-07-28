@@ -14,7 +14,7 @@ try {
 
 // Classes:
 class Model {
-  constructor(data) {
+  constructor(data, configuration) {
     if (!data.id) {
       throw new Error('Model.js: cannot create instance without an id!')
     }
@@ -87,7 +87,7 @@ class Model {
   }
 
   // Public functions:
-  onUpdate(callback) {
+  onupdate(callback) {
     notify[this._id()].updates.push(callback)
   }
 

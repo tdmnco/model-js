@@ -54,7 +54,7 @@ let apple = new Fruit({
   id: '2'
 })
 
-apple.onUpdate((property, before, after) => {
+apple.onupdate((property, before, after) => {
   console.log('The apple ' + property + ' was ' + before + ', but now it is ' + after + '!')
 })
 
@@ -134,7 +134,7 @@ Note that if your question has general relevance, it might be worth sharing with
 
 #### News
 
-* Support for update hooks via `instance.onUpdate()`.
+* Support for update hooks via `instance.onupdate()`.
 * Return model instances on static `get()` calls.
 * Attempt to both read from and write to `localStorage` in order to decide if support is present.
 * Support for setting the model name to be persisted in `localStorage` via `prototype.modelName`.

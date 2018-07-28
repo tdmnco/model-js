@@ -42,7 +42,7 @@ test('Get model name from modelName property', () => {
 test('Notify on constructor property update', () => {
   let test = new TestModelName({ id: '6' })
 
-  test.onUpdate((property, before, after) => {
+  test.onupdate((property, before, after) => {
     expect(property).toBe('id')
     expect(before).toBe('6')
     expect(after).toBe('7')
@@ -56,7 +56,7 @@ test('Notify on runtime property update', () => {
 
   test.firstName = ''
 
-  test.onUpdate((property, before, after) => {
+  test.onupdate((property, before, after) => {
     expect(property).toBe('firstName')
     expect(before).toBe('')
     expect(after).toBe('Kasper')

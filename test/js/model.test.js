@@ -97,3 +97,10 @@ test('Get instance property with same name as model class', () => {
 
   expect(Test.cache()['Test-10'].instance.id).toBe('10')
 })
+
+test('Get instances via properties query', () => {
+  new Test({ company: 'Tidemann&Co', id: '11', ownedBy: 'Kasper Tidemann' }).save()
+  new Test({ company: 'Alefarm Brewing', id: '12', ownedBy: 'Kasper Tidemann' }).save()
+
+  expect(Test.get({ ownedBy: 'Kasper Tidemann' }).length).toBe(2)
+})

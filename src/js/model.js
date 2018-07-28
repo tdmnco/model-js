@@ -1,5 +1,5 @@
 // Variables:
-let cache = []
+let cache = {}
 let persist = true
 let notify = {}
 
@@ -64,7 +64,26 @@ class Model {
     }
 
     if (query instanceof Object) {
+      let matches = []
 
+      for (let cached in cache) {
+        let instance = cache[cached].instance
+        let match = true
+
+        for (let property in query) {
+          if (instance[property] !== query[property]) {
+            match = false
+
+            break
+          }
+        }
+
+        if (match) {
+          matches.push(instance)
+        }
+      }
+
+      return matches
     }
 
     if (query instanceof Array) {

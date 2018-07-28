@@ -111,3 +111,7 @@ test('Get instances via array of ids', () => {
 
   expect(Test.get(['14', '15', '16']).length).toBe(3)
 })
+
+test('Get all instances', () => {
+  expect(Test.get().length).toBe(9)
+})

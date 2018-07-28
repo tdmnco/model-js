@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on a modified version of [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.0.9
+
+## News
+
+* Adds support for getting all instances without a query.
+* Improved test coverage.
+
 ## 0.0.8
 
 ### Bug fixes

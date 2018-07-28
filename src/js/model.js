@@ -50,6 +50,16 @@ class Model {
 
   // Static functions:
   static get(query) {
+    if (!query) {
+      let instances = []
+
+      for (let id in cache) {
+        instances.push(cache[id].instance)
+      }
+
+      return instances
+    }
+
     let queryType = typeof query
 
     if (queryType === 'string') {

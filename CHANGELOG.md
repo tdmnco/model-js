@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 0.0.9
 
-## News
+### News
 
 * Adds support for getting all instances without a query.
 * Improved test coverage.

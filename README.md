@@ -107,58 +107,6 @@ We believe in an open and welcoming community for all. Please post your question
 
 Note that if your question has general relevance, it might be worth sharing with others.
 
-## Change log
-
-### v0.0.6
-
-#### News
-
-* Replaces the use of `Object.defineProperty` in the model constructor in favor of `Proxy` for spying on properties added after an instance has been created.
-* Optimizes the handling of callbacks on updates, so that the previous `_hooks` array is not persisted into `localStorage`.
-
-#### Testing
-
-* Improved test coverage.
-
-### v0.0.5
-
-#### News
-
-* Introduces an in-memory cache for speedy retrieval of data.
-
-#### Testing
-
-* Improved test coverage.
-
-### v0.0.4
-
-#### News
-
-* Support for update hooks via `instance.onupdate()`.
-* Return model instances on static `get()` calls.
-* Attempt to both read from and write to `localStorage` in order to decide if support is present.
-* Support for setting the model name to be persisted in `localStorage` via `prototype.modelName`.
-
-#### Testing
-
-* Improved test coverage.
-
-### v0.0.2
-
-#### News
-
-* Support for `localStorage` if present.
-
-#### Testing
-
-* Improved test coverage.
-
-### v0.0.1
-
-#### News
-
-* Initial release.
-
 ---
 
 Thanks for reading!

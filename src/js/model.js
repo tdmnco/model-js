@@ -49,16 +49,50 @@ class Model {
   }
 
   // Static functions:
-  static get(id) {
-    id = (this.prototype.modelName || this.prototype.constructor.name) + '-' + id
+  static get(query) {
+    let queryType = typeof query
 
-    let cached = cache[id]
+    if (queryType === 'string') {
+      let id = (this.prototype.modelName || this.prototype.constructor.name) + '-' + query
+      let cached = cache[id]
 
-    if (!cached && persist) {
-      return new this(JSON.parse(localStorage.getItem(id)))
+      if (!cached && persist) {
+        return new this(JSON.parse(localStorage.getItem(id)))
+      }
+
+      return cached.instance
     }
 
-    return cached.instance
+    if (query instanceof Object) {
+
+    }
+
+    if (query instanceof Array) {
+
+    }
+  }
+
+  static cache() {
+    return cache
+  }
+
+  static preload(options) {
+    const modelName = this.prototype.modelName || this.prototype.constructor.name
+    const length = modelName.length
+
+    if (!options || options.localStorage) {
+      const count = localStorage.length
+
+      let instances = []
+
+      for (let i = 0; i < count; i++) {
+        let key = localStorage.key(i)
+
+        if (key.slice(0, length) === modelName) {
+          new this(JSON.parse(localStorage.getItem(key)))._cache()
+        }
+      }
+    }
   }
 
   // Private functions:
@@ -67,7 +101,7 @@ class Model {
     let now = new Date().toISOString()
 
     if (!cached) {
-      cached = { created: now, random: Math.random(), instance: this }
+      cached = { created: now, instance: this }
 
       cache[this._id()] = cached
     } else {

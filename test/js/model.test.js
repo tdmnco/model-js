@@ -85,3 +85,15 @@ test('Get instance from cache', () => {
   expect(test.description).toBe(cachedTest1.description)
   expect(test.description).toBe(cachedTest2.description)
 })
+
+test('Get instance property with same name as model class', () => {
+  expect(new Test({ get: '1', id: '9' }).get).toBe('1')
+})
+
+test('Get instance property with same name as model class', () => {
+  localStorage.setItem('Test-10', JSON.stringify({ id: '10' }))
+
+  Test.preload()
+
+  expect(Test.cache()['Test-10'].instance.id).toBe('10')
+})

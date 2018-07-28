@@ -63,11 +63,14 @@ class Model {
       return cached.instance
     }
 
-    if (query instanceof Object) {
-      let matches = []
+    let isPropertiesQuery = query instanceof Object
+    let isArrayOfIds = query instanceof Array
+    let matches = []
 
-      for (let cached in cache) {
-        let instance = cache[cached].instance
+    for (let cached in cache) {
+      let instance = cache[cached].instance
+
+      if (isPropertiesQuery && !isArrayOfIds) {
         let match = true
 
         for (let property in query) {
@@ -81,14 +84,18 @@ class Model {
         if (match) {
           matches.push(instance)
         }
+      } else if (isArrayOfIds) {
+        for (let id of query) {
+          if (instance.id === id) {
+            matches.push(instance)
+
+            break
+          }
+        }
       }
-
-      return matches
     }
 
-    if (query instanceof Array) {
-
-    }
+    return matches
   }
 
   static cache() {

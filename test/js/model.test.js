@@ -24,9 +24,7 @@ test('Get instance id', () => {
 })
 
 test('Get instance from localStorage', () => {
-  let test = new Test({ id: '3' })
-
-  test.save()
+  new Test({ id: '3' }).save()
 
   expect(Test.get('3').id).toBe('3')
 })
@@ -103,4 +101,13 @@ test('Get instances via properties query', () => {
   new Test({ company: 'Alefarm Brewing', id: '12', ownedBy: 'Kasper Tidemann' }).save()
 
   expect(Test.get({ ownedBy: 'Kasper Tidemann' }).length).toBe(2)
+})
+
+test('Get instances via array of ids', () => {
+  new Test({ id: '13' }).save()
+  new Test({ id: '14' }).save()
+  new Test({ id: '15' }).save()
+  new Test({ id: '16' }).save()
+
+  expect(Test.get(['14', '15', '16']).length).toBe(3)
 })

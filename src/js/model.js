@@ -70,11 +70,19 @@ class Model {
       let id = (this.prototype.modelName || this.prototype.constructor.name) + '-' + query
       let cached = cache[id]
 
-      if (!cached && persist) {
-        return new this(JSON.parse(localStorage.getItem(id)))
+      if (cached) {
+        return cached.instance
       }
 
-      return cached.instance
+      if (!cached && persist) {
+        let stored = JSON.parse(localStorage.getItem(id))
+
+        if (stored && stored.id) {
+          return new this(stored)
+        }
+      }
+
+      return null
     }
 
     let isPropertiesQuery = query instanceof Object
@@ -161,6 +169,16 @@ class Model {
   }
 
   // Public functions:
+  delete() {
+    let id = this._id()
+
+    delete cache[id]
+
+    if (persist) {
+      localStorage.removeItem(id)
+    }
+  }
+
   onupdate(callback) {
     notify[this._id()].updates.push(callback)
   }

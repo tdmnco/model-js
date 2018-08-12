@@ -131,3 +131,13 @@ test('Get first instance via array of ids', () => {
 
   expect(Test.first(['19']).id).toBe('19')
 })
+
+test('Delete instance', () => {
+  let test = new Test({ id: '21' })
+
+  test.save()
+
+  test.delete()
+
+  expect(Test.get('21')).toBe(null)
+})

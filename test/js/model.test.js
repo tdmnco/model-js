@@ -141,3 +141,21 @@ test('Delete instance', () => {
 
   expect(Test.get('21')).toBe(null)
 })
+
+test('Freeze instance', () => {
+  let test = new Test({ id: '22', name: 'Kasper' })
+
+  test.save()
+
+  test.freeze()
+
+  test.name = 'Jazzper'
+
+  expect(test.name).toBe('Kasper')
+
+  test.thaw()
+
+  test.name = 'Jazzper'
+
+  expect(test.name).toBe('Jazzper')
+})

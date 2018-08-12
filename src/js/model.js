@@ -33,15 +33,17 @@ class Model {
   		},
 
       set(target, property, value) {
-        let updates = notify[id].updates
+        if (!target.frozen()) {
+          let updates = notify[id].updates
 
-        if (updates.length) {
-          for (let update of updates) {
-            update(property, target[property], value)
+          if (updates.length) {
+            for (let update of updates) {
+              update(property, target[property], value)
+            }
           }
-        }
 
-        Reflect.set(target, property, value)
+          Reflect.set(target, property, value)
+        }
 
         return true
       }
@@ -149,7 +151,7 @@ class Model {
     let now = new Date().toISOString()
 
     if (!cached) {
-      cached = { created: now, instance: this }
+      cached = { created: now, frozen: false, instance: this }
 
       cache[this._id()] = cached
     } else {
@@ -179,6 +181,18 @@ class Model {
     }
   }
 
+  freeze() {
+    this._cached().frozen = true
+  }
+
+  frozen() {
+    if (!this._cached()) {
+      return false
+    }
+
+    return this._cached().frozen
+  }
+
   onupdate(callback) {
     notify[this._id()].updates.push(callback)
   }
@@ -189,6 +203,10 @@ class Model {
     if (persist) {
       localStorage.setItem(this._id(), JSON.stringify(this))
     }
+  }
+
+  thaw() {
+    this._cached().frozen = false
   }
 }
 

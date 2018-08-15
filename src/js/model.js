@@ -14,7 +14,7 @@ try {
 
 // Classes:
 class Model {
-  constructor(data, configuration) {
+  constructor(data) {
     if (!data.id) {
       throw new Error('Model.js: cannot create instance without an id!')
     }

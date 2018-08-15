@@ -9,7 +9,8 @@
     "eslint": "*",
     "jest": "^23.5.0",
     "jest-localstorage-mock": "*",
-    "parcel-bundler": "^1.9.7"
+    "parcel-bundler": "^1.9.7",
+    "prettier": "*"
   },
   "homepage": "https://github.com/tdmnco/model-js#readme",
   "jest": {

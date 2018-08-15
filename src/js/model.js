@@ -30,7 +30,7 @@ class Model {
     return new Proxy(this, {
       get(target, property, receiver) {
 				return Reflect.get(target, property, receiver);
-  		},
+      },
 
       set(target, property, value) {
         if (!target.frozen()) {
@@ -132,8 +132,6 @@ class Model {
 
     if (!options || options.localStorage) {
       const count = localStorage.length
-
-      let instances = []
 
       for (let i = 0; i < count; i++) {
         let key = localStorage.key(i)

@@ -6,6 +6,7 @@
   "description": "Model.js is a simple model layer for web applications.",
   "devDependencies": {
     "babel-core": "^6.26.3",
+    "eslint": "*",
     "jest": "^23.5.0",
     "jest-localstorage-mock": "*",
     "parcel-bundler": "^1.9.7"

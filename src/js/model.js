@@ -56,14 +56,14 @@ class Model {
   }
 
   static get(query) {
-    if (!query) {
-      let instances = []
+    let matches = []
 
+    if (!query) {
       for (let id in cache) {
-        instances.push(cache[id].instance)
+        matches.push(cache[id].instance)
       }
 
-      return instances
+      return matches
     }
 
     let queryType = typeof query
@@ -76,7 +76,7 @@ class Model {
         return cached.instance
       }
 
-      if (!cached && persist) {
+      if (persist) {
         let stored = JSON.parse(localStorage.getItem(id))
 
         if (stored && stored.id) {
@@ -86,34 +86,43 @@ class Model {
 
       return null
     }
+    
+    let idsQuery = false
+    let propertiesQuery = false
+    
+    if (queryType === 'object') {
+      idsQuery = query instanceof Array
 
-    let isPropertiesQuery = query instanceof Object
-    let isArrayOfIds = query instanceof Array
-    let matches = []
+      if (!idsQuery) {
+        propertiesQuery = query instanceof Object
+      }
+    }
 
-    for (let cached in cache) {
-      let instance = cache[cached].instance
-
-      if (isPropertiesQuery && !isArrayOfIds) {
-        let match = true
-
-        for (let property in query) {
-          if (instance[property] !== query[property]) {
-            match = false
-
-            break
+    if (idsQuery || propertiesQuery) {
+      for (let cached in cache) {
+        let instance = cache[cached].instance
+  
+        if (propertiesQuery) {
+          let match = true
+  
+          for (let property in query) {
+            if (instance[property] !== query[property]) {
+              match = false
+  
+              break
+            }
           }
-        }
-
-        if (match) {
-          matches.push(instance)
-        }
-      } else if (isArrayOfIds) {
-        for (let id of query) {
-          if (instance.id === id) {
+  
+          if (match) {
             matches.push(instance)
-
-            break
+          }
+        } else if (idsQuery) {
+          for (let id of query) {
+            if (instance.id === id) {
+              matches.push(instance)
+  
+              break
+            }
           }
         }
       }

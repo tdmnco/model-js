@@ -84,11 +84,11 @@ test('Get instance from cache', () => {
   expect(test.description).toBe(cachedTest2.description)
 })
 
-test('Get instance property with same name as model class', () => {
+test('Get instance property with same name as model function', () => {
   expect(new Test({ get: '1', id: '9' }).get).toBe('1')
 })
 
-test('Get instance property with same name as model class', () => {
+test('Preload instance from localStorage', () => {
   localStorage.setItem('Test-10', JSON.stringify({ id: '10' }))
 
   Test.preload()
@@ -96,7 +96,7 @@ test('Get instance property with same name as model class', () => {
   expect(Test.cache()['Test-10'].instance.id).toBe('10')
 })
 
-test('Get instances via properties query', () => {
+test('Get instances via property query', () => {
   new Test({ company: 'Tidemann&Co', id: '11', ownedBy: 'Kasper Tidemann' }).save()
   new Test({ company: 'Alefarm Brewing', id: '12', ownedBy: 'Kasper Tidemann' }).save()
 
@@ -142,7 +142,7 @@ test('Delete instance', () => {
   expect(Test.get('21')).toBe(null)
 })
 
-test('Freeze instance', () => {
+test('Freeze and thaw instance', () => {
   let test = new Test({ id: '22', name: 'Kasper' })
 
   test.save()

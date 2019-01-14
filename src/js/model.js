@@ -56,79 +56,21 @@ class Model {
   }
 
   static get(query) {
-    let matches = []
-
     if (!query) {
-      for (let id in cache) {
-        matches.push(cache[id].instance)
-      }
-
-      return matches
+      return this._getInstances()
     }
 
-    let queryType = typeof query
-
-    if (queryType === 'string') {
-      let id = (this.prototype.modelName || this.prototype.constructor.name) + '-' + query
-      let cached = cache[id]
-
-      if (cached) {
-        return cached.instance
-      }
-
-      if (persist) {
-        let stored = JSON.parse(localStorage.getItem(id))
-
-        if (stored && stored.id) {
-          return new this(stored)
-        }
-      }
-
-      return null
-    }
-    
-    let idsQuery = false
-    let propertiesQuery = false
-    
-    if (queryType === 'object') {
-      idsQuery = query instanceof Array
-
-      if (!idsQuery) {
-        propertiesQuery = query instanceof Object
-      }
+    if (typeof query === 'string') {
+      return this._getById(query)
     }
 
-    if (idsQuery || propertiesQuery) {
-      for (let cached in cache) {
-        let instance = cache[cached].instance
-  
-        if (propertiesQuery) {
-          let match = true
-  
-          for (let property in query) {
-            if (instance[property] !== query[property]) {
-              match = false
-  
-              break
-            }
-          }
-  
-          if (match) {
-            matches.push(instance)
-          }
-        } else if (idsQuery) {
-          for (let id of query) {
-            if (instance.id === id) {
-              matches.push(instance)
-  
-              break
-            }
-          }
-        }
-      }
+    if (query instanceof Array) {
+      return this._getByIds(query)
     }
 
-    return matches
+    if (query instanceof Object) {
+      return this._getByProperties(query)
+    }
   }
 
   static cache() {
@@ -153,6 +95,76 @@ class Model {
   }
 
   // Private functions:
+  static _getById(query) {
+    let id = (this.prototype.modelName || this.prototype.constructor.name) + '-' + query
+    let cached = cache[id]
+
+    if (cached) {
+      return cached.instance
+    }
+
+    if (persist) {
+      let stored = JSON.parse(localStorage.getItem(id))
+
+      if (stored && stored.id) {
+        return new this(stored)
+      }
+    }
+
+    return null
+  }
+
+  static _getByIds(query) {
+    let matches = []
+
+    for (let cached in cache) {
+      let instance = cache[cached].instance
+
+      for (let id of query) {
+        if (instance.id === id) {
+          matches.push(instance)
+
+          break
+        }
+      }
+    }
+
+    return matches
+  }
+
+  static _getByProperties(query) {
+    let matches = []
+
+    for (let cached in cache) {
+      let instance = cache[cached].instance
+      let match = true
+
+      for (let property in query) {
+        if (instance[property] !== query[property]) {
+          match = false
+
+          break
+        }
+      }
+
+      if (match) {
+        matches.push(instance)
+      }
+    }
+
+    return matches
+  }
+
+  static _getInstances() {
+    let matches = []
+    
+    for (let id in cache) {
+      matches.push(cache[id].instance)
+    }
+
+    return matches
+  }
+
   _cache() {
     let cached = this._cached()
     let now = new Date().toISOString()

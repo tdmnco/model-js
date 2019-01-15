@@ -94,7 +94,7 @@ test('Preload instance from localStorage', () => {
 
   Test1.preload()
 
-  expect(Test1.cache()['Test1-10'].instance.id).toBe('10')
+  expect(Test1.cache()['10'].instance.id).toBe('10')
 })
 
 test('Get instances via property query', () => {
@@ -162,9 +162,21 @@ test('Freeze and thaw instance', () => {
 })
 
 test('Get caches for three separate models', () => {
-  let test1 = new Test1({ id: '23' })
-  let test2 = new Test2({ id: '24' })
-  let test3 = new Test3({ id: '25' })
+  new Test1({ id: '23' }).save()
+  new Test2({ id: '24' }).save()
+  new Test3({ id: '25' }).save()
 
-  
+  expect(Object.keys(Test1.cache()).length).toBe(15)
+  expect(Object.keys(Test2.cache()).length).toBe(1)
+  expect(Object.keys(Test3.cache()).length).toBe(1)
+})
+
+test('Delete caches for three separate models', () => {
+  Test1.deleteCache()
+  Test2.deleteCache()
+  Test3.deleteCache()
+
+  expect(Object.keys(Test1.cache()).length).toBe(0)
+  expect(Object.keys(Test2.cache()).length).toBe(0)
+  expect(Object.keys(Test3.cache()).length).toBe(0)
 })

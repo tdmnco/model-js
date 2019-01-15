@@ -22,9 +22,18 @@ class Model {
 
     Object.assign(this, data)
 
-    let id = (this.constructor.prototype.modelName || this.constructor.name) + '-' + this.id
+    const modelName = this.constructor.prototype.modelName || this.constructor.name
+    const id = this.id
 
-    hooks[id] = {
+    if (!cache[modelName]) {
+      cache[modelName] = {}
+    }
+
+    if (!hooks[modelName]) {
+      hooks[modelName] = {}
+    }
+
+    hooks[modelName][id] = {
       updates: []
     }
 
@@ -35,7 +44,7 @@ class Model {
 
       set(target, property, value) {
         if (!target.frozen()) {
-          let updates = hooks[id].updates
+          let updates = hooks[modelName][id].updates
 
           if (updates.length) {
             for (let update of updates) {
@@ -52,6 +61,14 @@ class Model {
   }
 
   // Static functions:
+  static cache() {
+    return cache[this._modelName()]
+  }
+
+  static deleteCache() {
+    cache[this._modelName()] = {}
+  }
+
   static first(query) {
     return this.get(query)[0]
   }
@@ -74,12 +91,8 @@ class Model {
     }
   }
 
-  static cache() {
-    return cache
-  }
-
   static preload(options) {
-    const modelName = this.prototype.modelName || this.prototype.constructor.name
+    const modelName = this._modelName()
     const length = modelName.length
 
     if (!options || options.localStorage) {
@@ -95,17 +108,17 @@ class Model {
     }
   }
 
-  // Private functions:
+  // Private static functions:
   static _getById(query) {
-    let id = (this.prototype.modelName || this.prototype.constructor.name) + '-' + query
-    let cached = cache[id]
+    const modelName = this._modelName()
+    const cached = cache[modelName][query]
 
     if (cached) {
       return cached.instance
     }
 
     if (persist) {
-      let stored = JSON.parse(localStorage.getItem(id))
+      const stored = JSON.parse(localStorage.getItem(modelName + '-' + query))
 
       if (stored && stored.id) {
         return new this(stored)
@@ -116,10 +129,12 @@ class Model {
   }
 
   static _getByIds(query) {
+    const modelName = this._modelName()
+
     let matches = []
 
-    for (let cached in cache) {
-      let instance = cache[cached].instance
+    for (let id in cache[modelName]) {
+      const instance = cache[modelName][id].instance
 
       for (let id of query) {
         if (instance.id === id) {
@@ -134,10 +149,13 @@ class Model {
   }
 
   static _getByProperties(query) {
+    const modelName = this._modelName()
+
     let matches = []
 
-    for (let cached in cache) {
-      let instance = cache[cached].instance
+    for (let id in cache[modelName]) {
+      const instance = cache[modelName][id].instance
+      
       let match = true
 
       for (let property in query) {
@@ -157,15 +175,24 @@ class Model {
   }
 
   static _getInstances() {
+    const modelName = this._modelName()
+
     let matches = []
     
-    for (let id in cache) {
-      matches.push(cache[id].instance)
+    for (let id in cache[modelName]) {
+      matches.push(cache[modelName][id].instance)
     }
 
     return matches
   }
 
+  static _modelName() {
+    console.log('CALLING STATIC MODELNAME')
+
+    return this.prototype.modelName || this.prototype.constructor.name
+  }
+
+  // Private functions:
   _cache() {
     let cached = this._cached()
     let now = new Date().toISOString()
@@ -173,7 +200,7 @@ class Model {
     if (!cached) {
       cached = { created: now, frozen: false, instance: this }
 
-      cache[this._id()] = cached
+      cache[this._modelName()][this.id] = cached
     } else {
       cached.instance = this
       cached.updated = now
@@ -183,22 +210,29 @@ class Model {
   }
 
   _cached() {
-    return cache[this._id()]
+    return cache[this._modelName()][this.id]
   }
 
   _id() {
-    return (this.modelName || this.constructor.name) + '-' + this.id
+    return this._modelName() + '-' + this.id
+  }
+
+  _modelName() {
+    console.log('CALLING INSTANCE MODELNAME')
+
+    return this.constructor.prototype.modelName || this.constructor.name
   }
 
   // Public functions:
   delete() {
-    let id = this._id()
+    const id = this.id
+    const modelName = this._modelName()
 
-    delete cache[id]
-    delete hooks[id]
+    delete cache[modelName][id]
+    delete hooks[modelName][id]
 
     if (persist) {
-      localStorage.removeItem(id)
+      localStorage.removeItem(this._id())
     }
   }
 
@@ -215,7 +249,7 @@ class Model {
   }
 
   onupdate(callback) {
-    hooks[this._id()].updates.push(callback)
+    hooks[this._modelName()][this.id].updates.push(callback)
   }
 
   save() {

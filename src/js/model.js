@@ -149,12 +149,12 @@ class Model {
   }
 
   static _getByProperties(query) {
-    const modelName = this._modelName()
+    const modelCache = cache[this._modelName()]
 
     let matches = []
 
-    for (let id in cache[modelName]) {
-      const instance = cache[modelName][id].instance
+    for (let id in modelCache) {
+      const instance = modelCache[id].instance
       
       let match = true
 
@@ -175,20 +175,18 @@ class Model {
   }
 
   static _getInstances() {
-    const modelName = this._modelName()
+    const modelCache = cache[this._modelName()]
 
     let matches = []
     
-    for (let id in cache[modelName]) {
-      matches.push(cache[modelName][id].instance)
+    for (let id in modelCache) {
+      matches.push(modelCache[id].instance)
     }
 
     return matches
   }
 
   static _modelName() {
-    console.log('CALLING STATIC MODELNAME')
-
     return this.prototype.modelName || this.prototype.constructor.name
   }
 
@@ -218,8 +216,6 @@ class Model {
   }
 
   _modelName() {
-    console.log('CALLING INSTANCE MODELNAME')
-
     return this.constructor.prototype.modelName || this.constructor.name
   }
 

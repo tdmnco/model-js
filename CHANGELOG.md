@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on a modified version of [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.3.0
+
+### News
+
+* Adds support for multiple model caches.
+* Adds a `deleteCache()` function for deleting a model cache.
+* Improves the `get()` function by splitting its responsibilities into separate functions depending on the query.
+* Improves test coverage.
+
 ## 0.2.0
 
 ### News
@@ -12,22 +21,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Adds a `freeze()` function for freezing an instance to prevent property updates.
 * Adds a `thaw()` function for unfreezing an instance.
 * Improves the `get()` functionality and makes it return `null` when getting instances that do not exist in the cache or in localStorage.
-* Improved test coverage.
-
+* Improves test coverage.
 
 ## 0.1.0
 
 ### News
 
 * Adds a `first()` function for getting the first instance of a query.
-* Improved test coverage.
+* Improves test coverage.
 
 ## 0.0.9
 
 ### News
 
 * Adds support for getting all instances without a query.
-* Improved test coverage.
+* Improves test coverage.
 
 ## 0.0.8
 
@@ -42,7 +50,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Adds support for preloading instances via localStorage.
 * Adds support for getting instances via property values.
 * Adds support for getting instances via an array of ids.
-* Improved test coverage.
+* Improves test coverage.
 
 ### Bug fixes
 
@@ -54,14 +62,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 * Replaces the use of `Object.defineProperty` in the model constructor in favor of `Proxy` for spying on properties added after an instance has been created.
 * Optimizes the handling of callbacks on updates, so that the previous `_hooks` array is not persisted into `localStorage`.
-* Improved test coverage.
+* Improves test coverage.
 
 ## 0.0.5
 
 ### News
 
 * Introduces an in-memory cache for speedy retrieval of data.
-* Improved test coverage.
+* Improves test coverage.
 
 ## 0.0.4
 
@@ -71,13 +79,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Return model instances on static `get()` calls.
 * Attempt to both read from and write to `localStorage` in order to decide if support is present.
 * Support for setting the model name to be persisted in `localStorage` via `prototype.modelName`.
-* Improved test coverage.
+* Improves test coverage.
 
 ## 0.0.2
 
 ### News
 * Support for `localStorage` if present.
-* Improved test coverage.
+* Improves test coverage.
 
 ## 0.0.1
 

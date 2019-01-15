@@ -34,7 +34,8 @@ class Model {
     }
 
     hooks[modelName][id] = {
-      updates: []
+      onbeforedelete: [],
+      onbeforeupdate: []
     }
 
     return new Proxy(this, {
@@ -44,11 +45,11 @@ class Model {
 
       set(target, property, value) {
         if (!target.frozen()) {
-          let updates = hooks[modelName][id].updates
+          let onbeforeupdates = hooks[modelName][id].onbeforeupdate
 
-          if (updates.length) {
-            for (let update of updates) {
-              update(property, target[property], value)
+          if (onbeforeupdates.length) {
+            for (let callback of onbeforeupdates) {
+              callback(property, target[property], value)
             }
           }
 
@@ -211,6 +212,10 @@ class Model {
     return cache[this._modelName()][this.id]
   }
 
+  _hook(type, callback) {
+    hooks[this._modelName()][this.id][type].push(callback)
+  }
+
   _id() {
     return this._modelName() + '-' + this.id
   }
@@ -223,6 +228,14 @@ class Model {
   delete() {
     const id = this.id
     const modelName = this._modelName()
+
+    let onbeforedeletes = hooks[modelName][id].onbeforedelete
+
+    if (onbeforedeletes.length) {
+      for (let callback of onbeforedeletes) {
+        callback()
+      }
+    }
 
     delete cache[modelName][id]
     delete hooks[modelName][id]
@@ -244,8 +257,12 @@ class Model {
     return this._cached().frozen
   }
 
-  onupdate(callback) {
-    hooks[this._modelName()][this.id].updates.push(callback)
+  onbeforedelete(callback) {
+    this._hook('onbeforedelete', callback)
+  }
+
+  onbeforeupdate(callback) {
+    this._hook('onbeforeupdate', callback)
   }
 
   save() {

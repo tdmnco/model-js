@@ -38,10 +38,10 @@ test('Get model name from modelName property', () => {
   expect(new Test2({ id: '5' }).modelName).toBe('Test2')
 })
 
-test('Notify on constructor property update', () => {
+test('Notify before constructor property update', () => {
   let test = new Test2({ id: '6' })
 
-  test.onupdate((property, before, after) => {
+  test.onbeforeupdate((property, before, after) => {
     expect(property).toBe('id')
     expect(before).toBe('6')
     expect(after).toBe('7')
@@ -55,7 +55,7 @@ test('Notify on runtime property update', () => {
 
   test.firstName = ''
 
-  test.onupdate((property, before, after) => {
+  test.onbeforeupdate((property, before, after) => {
     expect(property).toBe('firstName')
     expect(before).toBe('')
     expect(after).toBe('Kasper')
@@ -179,4 +179,16 @@ test('Delete caches for three separate models', () => {
   expect(Object.keys(Test1.cache()).length).toBe(0)
   expect(Object.keys(Test2.cache()).length).toBe(0)
   expect(Object.keys(Test3.cache()).length).toBe(0)
+})
+
+test('Notify before instance deletion', () => {
+  const callback = jest.fn()
+
+  let test = new Test2({ id: '26' })
+
+  test.onbeforedelete(callback)
+
+  test.delete()
+
+  expect(callback).toHaveBeenCalled()
 })

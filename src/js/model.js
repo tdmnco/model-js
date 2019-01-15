@@ -195,6 +195,7 @@ class Model {
     let id = this._id()
 
     delete cache[id]
+    delete hooks[id]
 
     if (persist) {
       localStorage.removeItem(id)

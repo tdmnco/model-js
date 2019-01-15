@@ -1,8 +1,9 @@
 // Variables:
 let cache = {}
+let hooks = {}
 let persist = true
-let notify = {}
 
+// Test for localStorage support:
 try {
   localStorage.setItem('tdmnco-model-js', {})
   localStorage.removeItem('tdmnco-model-js')
@@ -23,7 +24,7 @@ class Model {
 
     let id = (this.constructor.prototype.modelName || this.constructor.name) + '-' + this.id
 
-    notify[id] = {
+    hooks[id] = {
       updates: []
     }
 
@@ -34,7 +35,7 @@ class Model {
 
       set(target, property, value) {
         if (!target.frozen()) {
-          let updates = notify[id].updates
+          let updates = hooks[id].updates
 
           if (updates.length) {
             for (let update of updates) {
@@ -213,7 +214,7 @@ class Model {
   }
 
   onupdate(callback) {
-    notify[this._id()].updates.push(callback)
+    hooks[this._id()].updates.push(callback)
   }
 
   save() {

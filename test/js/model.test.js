@@ -143,30 +143,12 @@ test('Delete instance', () => {
   expect(Test1.get('21')).toBe(null)
 })
 
-test('Freeze and thaw instance', () => {
-  let test = new Test1({ id: '22', name: 'Kasper' })
-
-  test.save()
-
-  test.freeze()
-
-  test.name = 'Jazzper'
-
-  expect(test.name).toBe('Kasper')
-
-  test.thaw()
-
-  test.name = 'Jazzper'
-
-  expect(test.name).toBe('Jazzper')
-})
-
 test('Get caches for three separate models', () => {
   new Test1({ id: '23' }).save()
   new Test2({ id: '24' }).save()
   new Test3({ id: '25' }).save()
 
-  expect(Object.keys(Test1.cache()).length).toBe(15)
+  expect(Object.keys(Test1.cache()).length).toBe(14)
   expect(Object.keys(Test2.cache()).length).toBe(1)
   expect(Object.keys(Test3.cache()).length).toBe(1)
 })

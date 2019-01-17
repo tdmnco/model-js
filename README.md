@@ -3,7 +3,22 @@
 - [What is Model.js?](#what-is-model-js)
 - [Installation](#installation)
 - [Documentation](#documentation)
+  - [Prevent uglifying model names](#prevent-uglifying-model-names)
 - [API](#api)
+  - [new Model([contents])](#new-modelcontents)
+  - [Model.cache()](#modelcache)
+  - [Model.deleteCache()](#modeldeletecache)
+  - [Model.first([query])](#modelfirstquery)
+  - [Model.get([query])](#modelgetquery)
+    - [Model.get([id])](#modelgetid)
+    - [Model.get([ids])](#modelgetids)
+    - [Model.get([query])](#modelgetquery-1)
+    - [Model.get()](#modelget)
+  - [Model.preload()](#modelpreload)
+  - [instance.delete()](#instancedelete)
+  - [instance.onbeforedelete([callback])](#instanceonbeforedeletecallback)
+  - [instance.onbeforeupdate([callback])](#instanceonbeforeupdatecallback)
+  - [instance.save()](#instancesave)
 - [Getting Help](#getting-help)
 
 ## What is Model.js?
@@ -40,29 +55,6 @@ post.author = 'Kasper Tidemann'
 
 post.save()
 ```
-
-### Callback on value updates
-
-Model.js supports callbacks for when the value of a property is updated:
-
-```javascript
-import { Model } from 'tdmnco-model-js'
-
-class Fruit extends Model {}
-
-let apple = new Fruit({
-  color: 'green',
-  id: '2'
-})
-
-apple.onupdate((property, before, after) => {
-  console.log('The apple ' + property + ' was ' + before + ', but now it is ' + after + '!')
-})
-
-apple.color = 'red'
-```
-
-The above example will print `The apple color was green, but now it is red!` in the console.
 
 ### Prevent uglifying model names
 
@@ -206,28 +198,6 @@ animal.save()
 animal.delete()
 ```
 
-### instance.freeze()
-
-Function for freezing an instance, rendering its properties immutable:
-
-```
-let airplane = new Airplane({
-  id: '2395',
-  manufacturer: 'Cessna'
-  type: 'propeller'
-})
-
-airplane.freeze()
-```
-
-### instance.frozen()
-
-Function to check if an instance if frozen:
-
-```
-let isFrozen = airplane.frozen()
-```
-
 ### instance.onbeforedelete([callback])
 
 Function for adding a callback to the deletion of an instance, calling the callback function before the instance is deleted:
@@ -267,18 +237,6 @@ let building = new Building({
 })
 
 building.save()
-```
-
-### instance.thaw()
-
-Function for thawing an instance of a model, making it mutable again:
-
-```
-let building = Building.get('2359')
-
-building.freeze()
-
-building.thaw()
 ```
 
 ## Getting Help

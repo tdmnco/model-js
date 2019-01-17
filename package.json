@@ -3,6 +3,9 @@
   "bugs": {
     "url": "https://github.com/tdmnco/model-js/issues"
   },
+  "dependencies": {
+    "npm": "^6.5.0"
+  },
   "description": "Model.js is a simple model layer for web applications.",
   "devDependencies": {
     "babel-core": "*",
@@ -38,5 +41,5 @@
     "type": "git",
     "url": "git+https://github.com/tdmnco/model-js.git"
   },
-  "version": "0.3.1"
+  "version": "0.3.2"
 }

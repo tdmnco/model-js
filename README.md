@@ -3,6 +3,7 @@
 - [What is Model.js?](#what-is-model-js)
 - [Installation](#installation)
 - [Documentation](#documentation)
+- [API](#api)
 - [Getting Help](#getting-help)
 
 ## What is Model.js?
@@ -100,6 +101,185 @@ $ npm run test
 ```
 
 ![Example of testing Model.js](https://raw.githubusercontent.com/tdmnco/model-js/master/src/gfx/npm-run-test.gif)
+
+## API
+
+Model.js exposes the following functions for working with models and instances. In the following, `Model` refers to the static class and `instance` refers to an instance of the model in question:
+
+### new Model([contents])
+
+Constructor used to create a new instance of a model:
+
+```
+new Car({
+  id: '4',
+  manufacturer: 'BMW',
+  model: '530d'
+})
+```
+
+### Model.cache()
+
+Function for returning the cached instances of a model:
+
+```
+let cachedInstances = Car.cache()
+```
+
+### Model.deleteCache()
+
+Function for deleting the cached instances of a model:
+
+```
+Car.deleteCache()
+```
+
+### Model.first([query])
+
+Function for getting the first instance of a model:
+
+```
+let car = Car.first()
+```
+
+The function can be called with a query in order to return the first instance that matches the query:
+
+```
+let band = new Band({
+  bandName: 'Metallica',
+  id: '17'
+})
+
+band.save()
+
+let metallica = Band.first({ bandName: 'Metallica' })
+```
+
+### Model.get([query])
+
+Function for getting instances of a model. It supports getting an instance by passing an id, by passing an array of ids or by passing a query. Additionally, it supports getting all instances of a model by not passing any arguments to the function:
+
+#### Model.get([id])
+
+```
+let apple = Apple.get('17')
+```
+
+#### Model.get([ids])
+
+```
+let apples = Apple.get(['17', '18', '19'])
+```
+
+#### Model.get([query])
+
+```
+let bmws = Car.get({ manufacturer: 'BMW' })
+```
+
+#### Model.get()
+
+```
+let cars = Car.get()
+```
+
+### Model.preload()
+
+Function for preloading models from `localStorage` into the in-memory cache:
+
+```
+Cars.preload()
+```
+
+### instance.delete()
+
+Function for deleting an instance of a model from `localStorage` and from the in-memory cache:
+
+```
+let animal = new Animal({
+  id: '392',
+  type: 'rabbit'
+})
+
+animal.save()
+
+animal.delete()
+```
+
+### instance.freeze()
+
+Function for freezing an instance, rendering its properties immutable:
+
+```
+let airplane = new Airplane({
+  id: '2395',
+  manufacturer: 'Cessna'
+  type: 'propeller'
+})
+
+airplane.freeze()
+```
+
+### instance.frozen()
+
+Function to check if an instance if frozen:
+
+```
+let isFrozen = airplane.frozen()
+```
+
+### instance.onbeforedelete([callback])
+
+Function for adding a callback to the deletion of an instance, calling the callback function before the instance is deleted:
+
+```
+let phone = new Phone({
+  brand: 'iPhone'
+  id: '944',
+  model: 'X'
+})
+
+phone.onbeforedelete(() => {
+  alert('Instance will be deleted now!')
+})
+```
+
+### instance.onbeforeupdate([callback])
+
+Function for adding a callback to the update of an instance property, calling the callback function before the property is updated:
+
+```
+let phone = Phone.get('944')
+
+phone.onbeforeupdate((property, before, after) => {
+  console.log(property + ' is ' + before + ' but will be changed to ' + after)
+})
+```
+
+### instance.save()
+
+Function for saving an instance of a model to the cache. The instance will also be saved to `localStorage` if it is supported:
+
+```
+let building = new Building({
+  id: '2359',
+  type: 'house'
+})
+
+building.save()
+```
+
+### instance.thaw()
+
+Function for thawing an instance of a model, making it mutable again:
+
+```
+let building = Building.get('2359')
+
+building.freeze()
+
+building.thaw()
+```
 
 ## Getting Help
 

@@ -4,17 +4,17 @@
     "url": "https://github.com/tdmnco/model-js/issues"
   },
   "dependencies": {
-    "npm": "^6.6.0"
+    "npm": "6.7.0"
   },
   "description": "Model.js is a simple model layer for web applications.",
   "devDependencies": {
-    "babel-core": "*",
-    "babel-preset-env": "*",
-    "eslint": "^5.12.1",
-    "jest": "*",
-    "jest-localstorage-mock": "*",
-    "parcel-bundler": "*",
-    "prettier": "^1.16.0"
+    "@babel/core": "7.2.2",
+    "@babel/preset-env": "7.3.1",
+    "eslint": "5.12.1",
+    "jest": "24.0.0",
+    "jest-localstorage-mock": "2.4.0",
+    "parcel-bundler": "1.11.0",
+    "prettier": "1.16.3"
   },
   "homepage": "https://github.com/tdmnco/model-js#readme",
   "jest": {

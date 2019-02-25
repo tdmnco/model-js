@@ -175,7 +175,7 @@ test('Notify before instance deletion', () => {
   expect(callback).toHaveBeenCalled()
 })
 
-test('Stringify instance to JSON', () => {
+test('JSON stringify comparison', () => {
   const now = new Date().toISOString()
   const test = new Test3({ created: now, firstname: 'Kasper', id: '27', lastname: 'Tidemann' })
   const json = { created: now, firstname: 'Kasper', id: '27', lastname: 'Tidemann' }

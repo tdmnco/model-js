@@ -82,13 +82,15 @@ export { Post }
 
 [↑ Back to top](#modeljs-)
 
-### Build
+### Build (distributable)
 
 Model.js makes use of [Parcel]() for building the distributable `index.js`. In order to build the project, issue the following command in your terminal:
 
 ```
 $ npm run dist
 ```
+
+After running the above command, the distributable version of `model.js` will be available in the `dist/` folder.
 
 ![Example of building Model.js](https://raw.githubusercontent.com/tdmnco/model-js/master/src/gfx/npm-run-dist.gif)
 

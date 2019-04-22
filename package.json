@@ -30,10 +30,10 @@
     "tdmnco"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/model.js",
   "name": "tdmnco-model-js",
   "scripts": {
-    "dist": "rm -rf dist && parcel build src/js/index.js",
+    "dist": "rm -rf dist && parcel build src/js/index.js --out-file model.js",
     "eslint": "eslint src/js/**/*.js",
     "test": "jest test/js"
   },
@@ -41,5 +41,5 @@
     "type": "git",
     "url": "git+https://github.com/tdmnco/model-js.git"
   },
-  "version": "0.4.0"
+  "version": "0.5.0"
 }

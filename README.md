@@ -27,6 +27,8 @@ Model.js is a simple model layer for web applications. It supports a dynamic mod
 
 It is used internally at Tidemann&Co for all our web applications that require a model layer in JavaScript.
 
+[↑ Back to top](#modeljs-)
+
 ## Installation
 
 Installation is done via npm:
@@ -34,6 +36,8 @@ Installation is done via npm:
 ```
 $ npm install tdmnco-model-js
 ```
+
+[↑ Back to top](#modeljs-)
 
 ## Documentation
 
@@ -56,6 +60,8 @@ post.author = 'Kasper Tidemann'
 post.save()
 ```
 
+[↑ Back to top](#modeljs-)
+
 ### Prevent uglifying model names
 
 If you use Parcel, Webpack or a similar bundler, your model names will be uglified when minimized for production.
@@ -74,6 +80,8 @@ Post.prototype.modelName = 'Post'
 export { Post }
 ```
 
+[↑ Back to top](#modeljs-)
+
 ### Build
 
 Model.js makes use of [Parcel]() for building the distributable `index.js`. In order to build the project, issue the following command in your terminal:
@@ -84,6 +92,8 @@ $ npm run dist
 
 ![Example of building Model.js](https://raw.githubusercontent.com/tdmnco/model-js/master/src/gfx/npm-run-dist.gif)
 
+[↑ Back to top](#modeljs-)
+
 ### Test
 
 Model.js makes use of [Jest](https://facebook.github.io/jest/) for its test suite. In order to run the test suite, issue the following command in your terminal:
@@ -93,6 +103,8 @@ $ npm run test
 ```
 
 ![Example of testing Model.js](https://raw.githubusercontent.com/tdmnco/model-js/master/src/gfx/npm-run-test.gif)
+
+[↑ Back to top](#modeljs-)
 
 ## API
 
@@ -110,6 +122,8 @@ new Car({
 })
 ```
 
+[↑ Back to top](#modeljs-)
+
 ### Model.cache()
 
 Function for returning the cached instances of a model:
@@ -118,6 +132,8 @@ Function for returning the cached instances of a model:
 let cachedInstances = Car.cache()
 ```
 
+[↑ Back to top](#modeljs-)
+
 ### Model.deleteCache()
 
 Function for deleting the cached instances of a model:
@@ -125,6 +141,8 @@ Function for deleting the cached instances of a model:
 ```
 Car.deleteCache()
 ```
+
+[↑ Back to top](#modeljs-)
 
 ### Model.first([query])
 
@@ -147,6 +165,8 @@ band.save()
 let metallica = Band.first({ bandName: 'Metallica' })
 ```
 
+[↑ Back to top](#modeljs-)
+
 ### Model.get([query])
 
 Function for getting instances of a model. It supports getting an instance by passing an id, by passing an array of ids or by passing a query. Additionally, it supports getting all instances of a model by not passing any arguments to the function:
@@ -157,11 +177,15 @@ Function for getting instances of a model. It supports getting an instance by pa
 let apple = Apple.get('17')
 ```
 
+[↑ Back to top](#modeljs-)
+
 #### Model.get([ids])
 
 ```
 let apples = Apple.get(['17', '18', '19'])
 ```
+
+[↑ Back to top](#modeljs-)
 
 #### Model.get([query])
 
@@ -169,11 +193,15 @@ let apples = Apple.get(['17', '18', '19'])
 let bmws = Car.get({ manufacturer: 'BMW' })
 ```
 
+[↑ Back to top](#modeljs-)
+
 #### Model.get()
 
 ```
 let cars = Car.get()
 ```
+
+[↑ Back to top](#modeljs-)
 
 ### Model.preload()
 
@@ -182,6 +210,8 @@ Function for preloading models from `localStorage` into the in-memory cache:
 ```
 Cars.preload()
 ```
+
+[↑ Back to top](#modeljs-)
 
 ### instance.delete()
 
@@ -197,6 +227,8 @@ animal.save()
 
 animal.delete()
 ```
+
+[↑ Back to top](#modeljs-)
 
 ### instance.onbeforedelete([callback])
 
@@ -214,6 +246,8 @@ phone.onbeforedelete(() => {
 })
 ```
 
+[↑ Back to top](#modeljs-)
+
 ### instance.onbeforeupdate([callback])
 
 Function for adding a callback to the update of an instance property, calling the callback function before the property is updated:
@@ -225,6 +259,8 @@ phone.onbeforeupdate((property, before, after) => {
   console.log(property + ' is ' + before + ' but will be changed to ' + after)
 })
 ```
+
+[↑ Back to top](#modeljs-)
 
 ### instance.save()
 
@@ -238,6 +274,8 @@ let building = new Building({
 
 building.save()
 ```
+
+[↑ Back to top](#modeljs-)
 
 ## Getting Help
 

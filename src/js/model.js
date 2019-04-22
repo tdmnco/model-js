@@ -40,7 +40,7 @@ class Model {
 
     return new Proxy(this, {
       get(target, property, receiver) {
-				return Reflect.get(target, property, receiver);
+				return Reflect.get(target, property, receiver)
       },
 
       set(target, property, value) {
@@ -148,9 +148,8 @@ class Model {
   }
 
   static _getByProperties(query) {
+    const matches = []
     const modelCache = cache[this._modelName()]
-
-    let matches = []
 
     for (let id in modelCache) {
       const instance = modelCache[id].instance
@@ -174,9 +173,8 @@ class Model {
   }
 
   static _getInstances() {
+    const matches = []
     const modelCache = cache[this._modelName()]
-
-    let matches = []
     
     for (let id in modelCache) {
       matches.push(modelCache[id].instance)
@@ -191,8 +189,9 @@ class Model {
 
   // Private functions:
   _cache() {
+    const now = new Date().toISOString()
+
     let cached = this._cached()
-    let now = new Date().toISOString()
 
     if (!cached) {
       cached = { created: now, instance: this }
@@ -226,8 +225,7 @@ class Model {
   delete() {
     const id = this.id
     const modelName = this._modelName()
-
-    let onbeforedeletes = hooks[modelName][id].onbeforedelete
+    const onbeforedeletes = hooks[modelName][id].onbeforedelete
 
     if (onbeforedeletes.length) {
       for (let callback of onbeforedeletes) {

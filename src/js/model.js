@@ -1,20 +1,10 @@
-// Variables:
-let cache = {}
-let hooks = {}
-let persist = true
-
-// Test for localStorage support:
-try {
-  localStorage.setItem('tdmnco-model-js', {})
-  localStorage.removeItem('tdmnco-model-js')
-} catch(error) {
-  console.warn('Model.js: localStorage not supported!', error)
-
-  persist = false
-}
+// Imports:
+import { cache, hooks, persist } from '.'
 
 // Classes:
 class Model {
+
+  // Constructor:
   constructor(data) {
     if (!data.id) {
       throw new Error('Model.js: cannot create instance without an id!')
@@ -44,12 +34,8 @@ class Model {
       },
 
       set(target, property, value) {
-        const onbeforeupdates = hooks[modelName][id].onbeforeupdate
-
-        if (onbeforeupdates.length) {
-          for (let callback of onbeforeupdates) {
-            callback(property, target[property], value)
-          }
+        for (let callback of hooks[modelName][id].onbeforeupdate) {
+          callback(property, target[property], value)
         }
 
         Reflect.set(target, property, value)
@@ -128,9 +114,8 @@ class Model {
   }
 
   static _getByIds(query) {
+    const matches = []
     const modelName = this._modelName()
-
-    let matches = []
 
     for (let id in cache[modelName]) {
       const instance = cache[modelName][id].instance

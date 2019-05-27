@@ -5,8 +5,8 @@
   },
   "description": "Model.js is a simple model layer for web applications.",
   "devDependencies": {
-    "@babel/core": "7.4.4",
-    "@babel/preset-env": "7.4.4",
+    "@babel/core": "7.4.5",
+    "@babel/preset-env": "7.4.5",
     "eslint": "5.16.0",
     "jest": "24.8.0",
     "jest-localstorage-mock": "2.4.0",

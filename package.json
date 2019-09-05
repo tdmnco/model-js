@@ -5,18 +5,15 @@
   },
   "description": "Model.js is a simple model layer for web applications.",
   "devDependencies": {
-    "@babel/cli": "7.5.5",
     "@babel/core": "7.5.5",
     "@babel/preset-env": "7.5.5",
-    "browserify": "16.5.0",
     "del-cli": "2.0.0",
-    "eslint": "6.3.0",
-    "jest": "24.9.0",
+    "eslint": "6.1.0",
+    "jest": "24.8.0",
     "jest-localstorage-mock": "2.4.0",
-    "mkdirp": "0.5.1",
-    "npm": "6.11.3",
+    "npm": "6.10.3",
     "npm-run-all": "4.1.5",
-    "uglify-js": "3.6.0"
+    "parcel-bundler": "1.12.3"
   },
   "homepage": "https://github.com/tdmnco/model-js#readme",
   "jest": {
@@ -32,24 +29,20 @@
     "tdmnco"
   ],
   "license": "MIT",
-  "main": "dist/model.min.js",
+  "main": "dist/model.js",
   "name": "tdmnco-model",
   "scripts": {
-    "build": "npx run-s build:*",
-    "build:clean": "npx del build",
-    "build:eslint": "npm run eslint",
-    "build:js": "npx babel src/js --out-dir build/js --source-maps && npx browserify build/js/index.js -o build/js/bundle.js",
-    "build:test": "npm run test",
     "dist": "npx run-s dist:*",
-    "dist:clean": "npx del dist && mkdirp dist",
-    "dist:js": "npx uglifyjs -c -m -o dist/model.min.js build/js/bundle.js",
-    "eslint": "eslint src/js/**/*.js",
-    "release": "npm run build && npm run dist",
-    "test": "jest test/js"
+    "dist:clean": "npx del dist",
+    "dist:js": "npx parcel build src/js/index.js --out-file model.js",
+    "dist:test": "npm run test",
+    "test": "npx run-s test:*",
+    "test:eslint": "npx eslint src/js/**/*.js",
+    "test:jest": "npx jest test/js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tdmnco/model-js.git"
   },
-  "version": "0.6.0"
+  "version": "0.6.1"
 }

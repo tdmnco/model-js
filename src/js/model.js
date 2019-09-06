@@ -1,5 +1,18 @@
-// Imports:
-import { cache, hooks, persist } from '.'
+// Constants:
+const cache = {}
+const hooks = {}
+
+// Variables:
+let persist = true
+
+try {
+  localStorage.setItem('tdmnco-model-js', {})
+  localStorage.removeItem('tdmnco-model-js')
+} catch(error) {
+  console.warn('Model.js: localStorage not supported!', error)
+
+  persist = false
+}
 
 // Classes:
 class Model {
@@ -244,4 +257,4 @@ class Model {
 }
 
 // Exports:
-export { Model }
+export default Model

@@ -1,5 +1,5 @@
 // Imports:
-import { Model } from '../../src/js'
+import Model from '../../dist/js/model.js'
 
 // Classes:
 class Test1 extends Model {}

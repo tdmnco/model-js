@@ -44,7 +44,7 @@ $ npm install tdmnco-model-js
 Using Model.js is simple and easy. Consider the following example:
 
 ```javascript
-import { Model } from 'tdmnco-model-js'
+import Model from 'tdmnco-model-js'
 
 class Post extends Model {}
 
@@ -71,7 +71,7 @@ This results in data stored in `localStorage` with names like `i-1` and `y-2` in
 In order to prevent this, prototype the name of a given model:
 
 ```javascript
-import { Model } from 'tdmnco-model-js'
+import Model from 'tdmnco-model-js'
 
 class Post extends Model {}
 

@@ -5,14 +5,14 @@
   },
   "description": "Model.js is a simple model layer for web applications.",
   "devDependencies": {
-    "@babel/cli": "7.5.5",
-    "@babel/core": "7.5.5",
-    "@babel/preset-env": "7.5.5",
-    "@babel/plugin-transform-runtime": "7.5.5",
-    "@babel/runtime": "7.5.5",
+    "@babel/cli": "7.6.2",
+    "@babel/core": "7.6.2",
+    "@babel/preset-env": "7.6.2",
+    "@babel/plugin-transform-runtime": "7.6.2",
+    "@babel/runtime": "7.6.2",
     "babelify": "10.0.0",
-    "del-cli": "2.0.0",
-    "eslint": "6.3.0",
+    "del-cli": "3.0.0",
+    "eslint": "6.5.1",
     "jest": "24.9.0",
     "jest-localstorage-mock": "2.4.0",
     "mkdirp": "0.5.1",
@@ -47,7 +47,7 @@
     "release": "npm run build && npm run dist",
     "test": "run-s test:*",
     "test:eslint": "eslint src/js/**/*.js",
-    "test:jest": "jest test/js"
+    "test:jest": "jest --verbose test/js"
   },
   "repository": {
     "type": "git",

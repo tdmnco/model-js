@@ -89,6 +89,14 @@ class Model {
     }
   }
 
+  static load(data) {
+    if (data && data.length > 0) {
+      for (let instance of data) {
+        new this(instance).save()
+      }
+    }
+  }
+
   static preload(options) {
     const modelName = this._modelName()
     const length = modelName.length

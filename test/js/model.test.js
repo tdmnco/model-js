@@ -204,3 +204,30 @@ test('JSON stringify comparison', () => {
   expect(Object.keys(json)).toEqual(Object.keys(test))
   expect(JSON.stringify(test)).toEqual(JSON.stringify(json))
 })
+
+test('Load multiple instances using data payload', () => {
+  Test1.load([
+    {
+      firstname: 'Kasper',
+      id: '1',
+      lastname: 'Tidemann'
+    },
+    {
+      firstname: 'Britt',
+      id: '2',
+      lastname: 'van Slyck'
+    },
+    {
+      firstname: 'Pepper',
+      id: '3',
+      lastname: 'van Slyck Tidemann'
+    },
+    {
+      firstname: 'James',
+      id: '4',
+      lastname: 'van Slyck Tidemann'
+    }
+  ])
+
+  expect(Test1.get().length).toBe(4)
+})

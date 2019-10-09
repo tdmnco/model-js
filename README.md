@@ -14,6 +14,7 @@
     - [Model.get([ids])](#modelgetids)
     - [Model.get([query])](#modelgetquery-1)
     - [Model.get()](#modelget)
+  - [Model.load()](#modelload)
   - [Model.preload()](#modelpreload)
   - [instance.delete()](#instancedelete)
   - [instance.onbeforedelete([callback])](#instanceonbeforedeletecallback)
@@ -205,12 +206,39 @@ let cars = Car.get()
 
 [↑ Back to top](#modeljs-)
 
+### Model.load()
+
+Function for loading data into a model, typically used after fetching data from an endpoint:
+
+```
+const data = [
+  {
+    abv: 6.2,
+    brewery: 'Alefarm Brewing',
+    id: '1',
+    name: 'Elevate',
+    type: 'IPA'
+  },
+  {
+    abv: 8,
+    brewery: 'Alefarm Brewing',
+    id: '2',
+    name: 'Because Babylon',
+    type: 'DIPA'
+  }
+]
+
+Beer.load(data)
+```
+
+[↑ Back to top](#modeljs-)
+
 ### Model.preload()
 
 Function for preloading models from `localStorage` into the in-memory cache:
 
 ```
-Cars.preload()
+User.preload()
 ```
 
 [↑ Back to top](#modeljs-)

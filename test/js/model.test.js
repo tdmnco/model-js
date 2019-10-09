@@ -104,6 +104,14 @@ test('Preload instance from localStorage', () => {
   expect(Test1.cache()['1'].instance.id).toBe('1')
 })
 
+test('Promise resolve on instance preload from localStorage', () => {
+  localStorage.setItem('Test1-2', JSON.stringify({ id: '2' }))
+
+  Test1.preload().then((count) => {
+    expect(count).toBeGreatherThan(0)
+  })
+})
+
 test('Get instances via property query', () => {
   new Test1({ company: 'Tidemann&Co', id: '1', ownedBy: 'Kasper Tidemann' }).save()
   new Test1({ company: 'Alefarm Brewing', id: '2', ownedBy: 'Kasper Tidemann' }).save()

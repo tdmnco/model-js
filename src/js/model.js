@@ -93,17 +93,27 @@ class Model {
     const modelName = this._modelName()
     const length = modelName.length
 
-    if (!options || options.localStorage) {
-      const count = localStorage.length
+    return new Promise((resolve) => {
+      if (!options || options.localStorage) {
+        const total = localStorage.length
 
-      for (let i = 0; i < count; i++) {
-        let key = localStorage.key(i)
+        let count = 0
+  
+        for (let i = 0; i < total; i++) {
+          let key = localStorage.key(i)
+  
+          if (key.slice(0, length) === modelName) {
+            new this(JSON.parse(localStorage.getItem(key)))._cache()
+          }
 
-        if (key.slice(0, length) === modelName) {
-          new this(JSON.parse(localStorage.getItem(key)))._cache()
+          count++
+
+          if (count === total - 1) {
+            resolve(count)
+          }
         }
       }
-    }
+    })
   }
 
   // Private static functions:

@@ -231,3 +231,30 @@ test('Load multiple instances using data payload', () => {
 
   expect(Test1.get().length).toBe(4)
 })
+
+test('Promise resolve on multiple instance load using data payload', () => {
+  Test1.load([
+    {
+      firstname: 'Kasper',
+      id: '1',
+      lastname: 'Tidemann'
+    },
+    {
+      firstname: 'Britt',
+      id: '2',
+      lastname: 'van Slyck'
+    },
+    {
+      firstname: 'Pepper',
+      id: '3',
+      lastname: 'van Slyck Tidemann'
+    },
+    {
+      firstname: 'James',
+      id: '4',
+      lastname: 'van Slyck Tidemann'
+    }
+  ]).then((count) => {
+    expect(count).toBeGreatherThan(0)
+  })
+})

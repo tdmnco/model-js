@@ -90,11 +90,25 @@ class Model {
   }
 
   static load(data) {
-    if (data && data.length > 0) {
-      for (let instance of data) {
-        new this(instance).save()
+    return new Promise((resolve) => {
+      const total = data && data.length
+
+      if (total) {
+        let count = 0
+
+        for (let instance of data) {
+          new this(instance).save()
+
+          count++
+          
+          if (count === total - 1) {
+            resolve(count)
+          }
+        }
+      } else {
+        resolve()
       }
-    }
+    })
   }
 
   static preload(options) {

@@ -258,3 +258,15 @@ test('Promise resolve on multiple instance load using data payload', () => {
     expect(count).toBeGreatherThan(0)
   })
 })
+
+test('Load single instances using data payload', () => {
+  Test3.load([
+    {
+      firstname: 'Kasper',
+      id: '1',
+      lastname: 'Tidemann'
+    }
+  ])
+
+  expect(Test3.get().length).toBe(1)
+})

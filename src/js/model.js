@@ -101,7 +101,7 @@ class Model {
 
           count++
           
-          if (count === total - 1) {
+          if (count === total) {
             resolve(count)
           }
         }
@@ -130,7 +130,7 @@ class Model {
 
           count++
 
-          if (count === total - 1) {
+          if (count === total) {
             resolve(count)
           }
         }

@@ -104,12 +104,10 @@ test('Preload instance from localStorage', () => {
   expect(Test1.cache()['1'].instance.id).toBe('1')
 })
 
-test('Promise resolve on instance preload from localStorage', () => {
+test('Promise resolve on instance preload from localStorage', async () => {
   localStorage.setItem('Test1-2', JSON.stringify({ id: '2' }))
 
-  Test1.preload().then((count) => {
-    expect(count).toBeGreatherThan(0)
-  })
+  await expect(Test1.preload()).resolves.toBe(2)
 })
 
 test('Get instances via property query', () => {
@@ -232,8 +230,8 @@ test('Load multiple instances using data payload', () => {
   expect(Test1.get().length).toBe(4)
 })
 
-test('Promise resolve on multiple instance load using data payload', () => {
-  Test1.load([
+test('Promise resolve on multiple instance load using data payload', async () => {
+  await expect(Test1.load([
     {
       firstname: 'Kasper',
       id: '1',
@@ -254,9 +252,7 @@ test('Promise resolve on multiple instance load using data payload', () => {
       id: '4',
       lastname: 'van Slyck Tidemann'
     }
-  ]).then((count) => {
-    expect(count).toBeGreatherThan(0)
-  })
+  ])).resolves.toBe(4)
 })
 
 test('Load single instances using data payload', () => {

@@ -134,6 +134,8 @@ class Model {
             resolve(count)
           }
         }
+      } else {
+        resolve()
       }
     })
   }

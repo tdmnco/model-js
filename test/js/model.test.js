@@ -17,8 +17,12 @@ afterEach(() => {
 })
 
 // Tests:
-test('Create new instance', () => {
+test('Create new instance with string id', () => {
   expect(new Test1({ id: '1' })).toBeDefined()
+})
+
+test('Create new instance with integer id', () => {
+  expect(new Test1({ id: 1 })).toBeDefined()
 })
 
 test('Cannot create new instance without id', () => {
@@ -27,8 +31,16 @@ test('Cannot create new instance without id', () => {
   }).toThrow()
 })
 
-test('Get instance id', () => {
-  expect(new Test1({ id: '1' }).id).toBe('1')
+test('Get instance with string id', () => {
+  new Test1({ id: '1' }).save()
+
+  expect(Test1.get('1').id).toBe('1')
+})
+
+test('Get instance with integer id', () => {
+  new Test1({ id: 1 }).save()
+
+  expect(Test1.get(1).id).toBe(1)
 })
 
 test('Get instance from localStorage', () => {

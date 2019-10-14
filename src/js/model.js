@@ -76,7 +76,7 @@ class Model {
       return this._getInstances()
     }
 
-    if (typeof query === 'string') {
+    if (/string|number/.test(typeof query)) {
       return this._getById(query)
     }
 
@@ -115,7 +115,7 @@ class Model {
     const modelName = this._modelName()
     const length = modelName.length
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       if (!options || options.localStorage) {
         const total = localStorage.length
 
@@ -135,7 +135,7 @@ class Model {
           }
         }
       } else {
-        resolve()
+        reject(new Error('Model.js: no options given to ' + modelName + '.load()!'))
       }
     })
   }

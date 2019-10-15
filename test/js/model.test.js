@@ -43,6 +43,10 @@ test('Get instance with integer id', () => {
   expect(Test1.get(1).id).toBe(1)
 })
 
+test('Get instance with null id', () => {
+  expect(Test1.get(null)).toBe(null)
+})
+
 test('Get instance from localStorage', () => {
   new Test1({ id: '1' }).save()
 

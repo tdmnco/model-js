@@ -72,21 +72,25 @@ class Model {
   }
 
   static get(query) {
-    if (!query) {
+    const type = typeof query
+
+    if (type === 'undefined') {
       return this._getInstances()
     }
 
-    if (/string|number/.test(typeof query)) {
+    if (/string|number/.test(type)) {
       return this._getById(query)
     }
 
-    if (query instanceof Array) {
+    if (query instanceof Array && query.length > 0) {
       return this._getByIds(query)
     }
 
     if (query instanceof Object) {
       return this._getByProperties(query)
     }
+
+    return null
   }
 
   static load(data) {

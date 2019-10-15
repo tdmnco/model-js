@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on a modified version of [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.6.6
+
+### News
+
+* Return `null` when attempting to get an instance with a `null` id.
+* Improved test coverage.
+
 ## 0.6.5
 
 ### News

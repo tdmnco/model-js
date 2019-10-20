@@ -147,7 +147,7 @@ class Model {
   // Private static functions:
   static _getById(query) {
     const modelName = this._modelName()
-    const cached = cache[modelName][query]
+    const cached = cache[modelName] && cache[modelName][query]
 
     if (cached) {
       return cached.instance

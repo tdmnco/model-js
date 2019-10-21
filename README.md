@@ -1,4 +1,4 @@
-# Model.js [![NPM Version](https://badge.fury.io/js/tdmnco-model-js.svg)](https://www.npmjs.com/package/tdmnco-model-js)
+# Model.js [![NPM Version](https://badge.fury.io/js/tdmnco-model.svg)](https://www.npmjs.com/package/tdmnco-model)
 
 - [What is Model.js?](#what-is-model-js)
 - [Installation](#installation)

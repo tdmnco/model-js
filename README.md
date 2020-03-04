@@ -6,16 +6,14 @@
   - [Prevent uglifying model names](#prevent-uglifying-model-names)
 - [API](#api)
   - [new Model([contents])](#new-modelcontents)
-  - [Model.cache()](#modelcache)
-  - [Model.deleteCache()](#modeldeletecache)
+  - [Model.delete()](#modeldelete)
   - [Model.first([query])](#modelfirstquery)
   - [Model.get([query])](#modelgetquery)
     - [Model.get([id])](#modelgetid)
     - [Model.get([ids])](#modelgetids)
     - [Model.get([query])](#modelgetquery-1)
     - [Model.get()](#modelget)
-  - [Model.load()](#modelload)
-  - [Model.preload()](#modelpreload)
+  - [Model.loadJSON()](#modelloadjson)
   - [instance.delete()](#instancedelete)
   - [instance.onbeforedelete([callback])](#instanceonbeforedeletecallback)
   - [instance.onbeforeupdate([callback])](#instanceonbeforeupdatecallback)
@@ -67,7 +65,7 @@ post.save()
 
 If you use Parcel, Webpack or a similar bundler, your model names will be uglified when minimized for production.
 
-This results in data stored in `localStorage` with names like `i-1` and `y-2` instead of `Post-1` and `User-2`.
+This results in data stored in `localStorage` or `sessionStorage` with names like `i-1` and `y-2` instead of `Post-1` and `User-2`.
 
 In order to prevent this, prototype the name of a given model:
 
@@ -85,13 +83,13 @@ export { Post }
 
 ### Build (distributable)
 
-Model.js makes use of [Parcel]() for building the distributable `index.js`. In order to build the project, issue the following command in your terminal:
+In order to build the Model.js, issue the following command in your terminal:
 
 ```
 $ npm run dist
 ```
 
-After running the above command, the distributable version of `model.js` will be available in the `dist/` folder.
+After running the above command, the distributable version of `model.js` will be available in the `dist/js/` folder.
 
 ![Example of building Model.js](https://raw.githubusercontent.com/tdmnco/model-js/master/src/gfx/npm-run-dist.gif)
 
@@ -99,10 +97,10 @@ After running the above command, the distributable version of `model.js` will be
 
 ### Test
 
-Model.js makes use of [Jest](https://facebook.github.io/jest/) for its test suite. In order to run the test suite, issue the following command in your terminal:
+Model.js makes use of [Jest](https://facebook.github.io/jest/) for its test suite. In order to run the development test suite, issue the following command in your terminal:
 
 ```
-$ npm run test
+$ npm run test:dev
 ```
 
 ![Example of testing Model.js](https://raw.githubusercontent.com/tdmnco/model-js/master/src/gfx/npm-run-test.gif)
@@ -127,23 +125,15 @@ new Car({
 
 [↑ Back to top](#modeljs-)
 
-### Model.cache()
+### Model.delete()
 
-Function for returning the cached instances of a model:
-
-```
-let cachedInstances = Car.cache()
-```
-
-[↑ Back to top](#modeljs-)
-
-### Model.deleteCache()
-
-Function for deleting the cached instances of a model:
+Function for deleting all instances of a model:
 
 ```
-Car.deleteCache()
+Car.delete()
 ```
+
+Note that this effectively empties the memory cache containing all instances of the given model.
 
 [↑ Back to top](#modeljs-)
 
@@ -152,20 +142,20 @@ Car.deleteCache()
 Function for getting the first instance of a model:
 
 ```
-let car = Car.first()
+const car = Car.first()
 ```
 
 The function can be called with a query in order to return the first instance that matches the query:
 
 ```
-let band = new Band({
+const band = new Band({
   bandName: 'Metallica',
   id: '17'
 })
 
 band.save()
 
-let metallica = Band.first({ bandName: 'Metallica' })
+const metallica = Band.first({ bandName: 'Metallica' })
 ```
 
 [↑ Back to top](#modeljs-)
@@ -177,7 +167,7 @@ Function for getting instances of a model. It supports getting an instance by pa
 #### Model.get([id])
 
 ```
-let apple = Apple.get('17')
+const apple = Apple.get('17')
 ```
 
 [↑ Back to top](#modeljs-)
@@ -185,7 +175,7 @@ let apple = Apple.get('17')
 #### Model.get([ids])
 
 ```
-let apples = Apple.get(['17', '18', '19'])
+const apples = Apple.get(['17', '18', '19'])
 ```
 
 [↑ Back to top](#modeljs-)
@@ -193,7 +183,7 @@ let apples = Apple.get(['17', '18', '19'])
 #### Model.get([query])
 
 ```
-let bmws = Car.get({ manufacturer: 'BMW' })
+const bmws = Car.get({ manufacturer: 'BMW' })
 ```
 
 [↑ Back to top](#modeljs-)
@@ -201,14 +191,14 @@ let bmws = Car.get({ manufacturer: 'BMW' })
 #### Model.get()
 
 ```
-let cars = Car.get()
+const cars = Car.get()
 ```
 
 [↑ Back to top](#modeljs-)
 
-### Model.load()
+### Model.loadJSON()
 
-Function for loading data into a model, typically used after fetching data from an endpoint:
+Function for loading JSON data into a model, typically used after fetching JSON from an endpoint:
 
 ```
 const data = [
@@ -228,27 +218,17 @@ const data = [
   }
 ]
 
-Beer.load(data)
-```
-
-[↑ Back to top](#modeljs-)
-
-### Model.preload()
-
-Function for preloading models from `localStorage` into the in-memory cache:
-
-```
-User.preload()
+Beer.loadJSON(data)
 ```
 
 [↑ Back to top](#modeljs-)
 
 ### instance.delete()
 
-Function for deleting an instance of a model from `localStorage` and from the in-memory cache:
+Function for deleting an instance of a model from the memory cache:
 
 ```
-let animal = new Animal({
+const animal = new Animal({
   id: '392',
   type: 'rabbit'
 })
@@ -265,7 +245,7 @@ animal.delete()
 Function for adding a callback to the deletion of an instance, calling the callback function before the instance is deleted:
 
 ```
-let phone = new Phone({
+const phone = new Phone({
   brand: 'iPhone'
   id: '944',
   model: 'X'
@@ -283,7 +263,7 @@ phone.onbeforedelete(() => {
 Function for adding a callback to the update of an instance property, calling the callback function before the property is updated:
 
 ```
-let phone = Phone.get('944')
+const phone = Phone.get('944')
 
 phone.onbeforeupdate((property, before, after) => {
   console.log(property + ' is ' + before + ' but will be changed to ' + after)
@@ -294,10 +274,10 @@ phone.onbeforeupdate((property, before, after) => {
 
 ### instance.save()
 
-Function for saving an instance of a model to the cache. The instance will also be saved to `localStorage` if it is supported:
+Function for saving an instance of a model to the memory cache:
 
 ```
-let building = new Building({
+const building = new Building({
   id: '2359',
   type: 'house'
 })

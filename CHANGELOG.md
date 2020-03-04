@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on a modified version of [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 0.6.9
+
+### News
+
+* Moves support for `localStorage` as the persistence layer out of this package and into its own package to be named `tdmnco-model-localstorage`.
+* Improved test coverage.
+
+## 0.6.8
+
+### News
+
+* Support for using either `localStorage` or `sessionStorage` as the persistence layer.
+* Improved test coverage.
+
 ## 0.6.7
 
 ### Bug fixes

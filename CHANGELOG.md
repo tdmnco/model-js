@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 * Moves support for `localStorage` as the persistence layer out of this package and into its own package to be named `tdmnco-model-localstorage`.
 * Improved test coverage.
 
-## 0.6.8
+## 0.6.8 (internal release)
 
 ### News
 

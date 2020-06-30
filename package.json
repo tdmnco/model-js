@@ -5,19 +5,19 @@
   },
   "description": "Model.js is a simple model layer for web applications.",
   "devDependencies": {
-    "@babel/core": "7.8.7",
-    "@babel/plugin-transform-runtime": "7.8.3",
-    "@babel/preset-env": "7.8.7",
-    "@babel/runtime": "7.8.7",
-    "@rollup/plugin-commonjs": "11.0.2",
-    "@rollup/plugin-node-resolve": "7.1.1",
-    "eslint": "6.8.0",
-    "jest": "25.1.0",
-    "mkdirp": "1.0.3",
-    "npm": "6.14.2",
+    "@babel/core": "7.10.3",
+    "@babel/plugin-transform-runtime": "7.10.3",
+    "@babel/preset-env": "7.10.3",
+    "@babel/runtime": "7.10.3",
+    "@rollup/plugin-commonjs": "13.0.0",
+    "@rollup/plugin-node-resolve": "8.1.0",
+    "eslint": "7.3.1",
+    "jest": "26.1.0",
+    "mkdirp": "1.0.4",
+    "npm": "6.14.5",
     "rimraf": "3.0.2",
-    "rollup": "1.32.0",
-    "rollup-plugin-babel": "4.3.3",
+    "rollup": "2.18.1",
+    "rollup-plugin-babel": "4.4.0",
     "rollup-plugin-uglify": "6.0.4"
   },
   "homepage": "https://github.com/tdmnco/model-js#readme",
@@ -35,6 +35,8 @@
     "postdist": "npm run test:dist",
     "predist": "rimraf dist && mkdirp dist/js",
     "pretest": "eslint src/js/**/*.js",
+    "release": "npm run dist",
+    "test": "npm run test:dev && npm run test:dist",
     "test:dev": "jest --verbose test/js/model.dev.test",
     "test:dist": "jest --verbose test/js/model.dist.test"
   },
@@ -42,5 +44,5 @@
     "type": "git",
     "url": "git+https://github.com/tdmnco/model-js.git"
   },
-  "version": "0.6.9"
+  "version": "0.7.0"
 }

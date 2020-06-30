@@ -37,8 +37,8 @@
     "pretest": "eslint src/js/**/*.js",
     "release": "npm run dist",
     "test": "npm run test:dev && npm run test:dist",
-    "test:dev": "jest --verbose test/js/model.dev.test",
-    "test:dist": "jest --verbose test/js/model.dist.test"
+    "test:dev": "jest --verbose test/js/dev/model.test",
+    "test:dist": "jest --verbose test/js/dist/model.test"
   },
   "repository": {
     "type": "git",
